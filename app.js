@@ -4,10 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var multiparty = require('multiparty');	//	文件上传
-var http = require('http');
-var util = require('util');
-var fs = require("fs");
+// var multiparty = require('multiparty');	//	文件上传
+// var http = require('http');
+// var util = require('util');
+// var fs = require("fs");
+
+var multer  = require('multer');
+var upload = multer({ dest: 'upload/' });
 
 var index = require('./routes/index');
 var users = require('./routes/users');

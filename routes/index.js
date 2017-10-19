@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-
+var multer  = require('multer');
+var upload = multer({ dest: 'upload/' });
 
 
 router.use(function (req, res, next) {
@@ -36,7 +37,9 @@ router.get('/hello', function(req, res, next) {
 //   console.log('Request Type:', req.method);
 //   next();
 // });
-
+router.post('/upload', upload.single('logo'), function(req, res, next){
+    res.send({ret_code: '0'});
+});
 
 
 router.get('/random.text', function (req, res) {
