@@ -4,22 +4,38 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
+const zlib = require('zlib');
+const gzip = zlib.createGzip();
+
+var serveIndex = require('serve-index'); //显示资源管理列表
+
+
+var fs = require("fs");
 // var multiparty = require('multiparty');	//	文件上传
 // var http = require('http');
 // var util = require('util');
 // var fs = require("fs");
 
-var multer  = require('multer');
-var upload = multer({ dest: 'upload/' });
+
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
 
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+
+//文件罗列
+app.use('/fileList', serveIndex(__dirname+'/upload', {'icons': true}))
+app.use('/fileList', express.static(__dirname + '/upload'));
+console.log("呵呵"+__dirname);
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -31,6 +47,9 @@ app.use('/static',express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
