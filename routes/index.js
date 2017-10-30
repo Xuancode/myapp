@@ -3,13 +3,9 @@ var router = express.Router();
 var fs = require("fs");
 var path = require('path');
 var archiver = require('archiver');//解压压缩模块
-//解压部分
-var unzip = require("unzip");
+var unzip = require("unzip");       //解压部分
+var multer  = require('multer');    //上传模块
 
-
-
-
-var multer  = require('multer');		//上传模块
 var createFolder = function(folder){
     try{
         fs.accessSync(folder); 
@@ -25,7 +21,6 @@ var storage = multer.diskStorage({		//上传文件配置
         cb(null, uploadFolder);    // 保存的路径，备注：需要自己创建
     },
     filename: function (req, file, cb) {
-        // 将保存文件名设置为 字段名 + 时间戳，比如 logo-1478521468943
         cb(null, file.originalname);  
     }
 });
@@ -42,16 +37,6 @@ router.post('/upload', upload.single('logo'), function(req, res, next){
     }
     res.send('上传成功');
 });
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -73,18 +58,6 @@ router.get('/hello', function(req, res, next) {
 	next();
 });
 
-
-
-
-
-
-// router.use('/user/:id', function(req, res, next) {
-//   console.log('Request URL:', req.originalUrl);
-//   next();
-// }, function (req, res, next) {
-//   console.log('Request Type:', req.method);
-//   next();
-// });
 
 
 router.get('/random.text', function (req, res) {
